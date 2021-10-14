@@ -24,7 +24,7 @@
 
 </html>
 <script>
-    const URL = "http://localhost:8080"
+    const URL = "http://localhost:8080/api"
     var app = new Vue({
         el: '#app',
         data: {
@@ -35,7 +35,11 @@
                 console.log(this.username, this.pwd)
                 const response = await fetch(`${URL}/login`, {
                     method: "POST",
-                    body: {user: this.username, pwd: this.pwd}
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({user: this.username, pwd: this.pwd})
                 })
                 const res = await response.json()
                 console.log(res)
