@@ -1,0 +1,22 @@
+{
+  "name": "sanibelle-exercice-525",
+  "version": "1.0.0",
+  "description": "Exercice d'initiation aux API sur node.js",
+  "main": "api.js",
+  "type": "module",
+  "scripts": {
+    "start": "node api.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.5.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gti525/h19-devoir-api-sanibelle.git"
+  }
+}
