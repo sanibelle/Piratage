@@ -31,13 +31,13 @@ router.post('/login', (req, res) => {
         return res
         .cookie("access_token", token)
         .status(200)
-        .json({ message: "Logged in successfully 😊 👌" })
+        .json({ token: token })
     }
     return res.status(403).send()
 })
 
-router.get('/message', authorization, function (req, res) {
-    res.json({ message: db.readInDbOfTheFuture() })
+router.get('/message', function (req, res) {
+    res.json(db.readInDbOfTheFuture())
 })
 
 router.put('/message', authorization, function (req, res) {

@@ -8,42 +8,67 @@
 </head>
 
 <body>
-    <div id="app">jsonwebtoken
+    <div id="app">
         <h1>Mon app</h1>
+        <h2>Mon message</h2>
+        <div v-html="message"></div>
         <div>
             <label for="username">Nom d'utilisateur</label>
-            <input type="text" v-model="username" id="username">
+            <input type="text" v-model="username" id="username" value="salut">
         </div>
         <div>
             <label for="pwd">Mot de passe</label>
-            <input type="text" v-model="pwd" id="pwd">
+            <input type="text" v-model="pwd" id="pwd" value="banane">
         </div>
         <button @click="login">Connectez-moi!</button>
     </div>
 </body>
-
 </html>
 <script>
+    
     const URL = "http://localhost:8080/api"
     var app = new Vue({
         el: '#app',
         data: {
-            message: 'Hello Vue!'
+            message: '',
+            username: 'salut',
+            pwd: 'banane'
         },
         methods: {
             login: async function () {
-                console.log(this.username, this.pwd)
                 const response = await fetch(`${URL}/login`, {
-                    method: "POST",
+                    method: 'POST',
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({user: this.username, pwd: this.pwd})
+                    //body: JSON.stringify({user: this.username, pwd: this.pwd})
+                    body: JSON.stringify({user: 'salut', pwd: 'banane'})
                 })
-                const res = await response.json()
-                console.log(res)
+                const res = await response.json();
+                console.log("🚀 ~ file: index.html ~ line 51 ~ (await response.json()).token", res.token)
+                document.cookie = `${res.token}`
+            },
+            getMessage: async function () {
+                const response = await fetch(`${URL}/message`, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                })
+                return response.json()
             }
+        },
+        beforeCreate: async function() {
+            const response = await fetch(`${URL}/message`, {
+                    method: "GET",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                })
+                this.message = await response.json()
         }
     })
 </script>

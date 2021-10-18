@@ -1,1 +1,1 @@
-<script> alert("Ca marche tu ca?");</script>.. rah non :(
+<button onclick="alert(document.cookie)">Click me</button>
