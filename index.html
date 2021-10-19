@@ -33,7 +33,7 @@
 </html>
 <script>
     
-    const URL = "http://localhost:8080/api"
+    const URL = "http://192.168.1.75:8080/api"
     var app = new Vue({
         el: '#app',
         data: {
@@ -80,7 +80,7 @@
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json',
-                        'Cookie': `access_token=${Document.cookie}`
+                        'Cookie': `access_token=${document.cookie}`
                     },
                     body: JSON.stringify({message: this.toSend})
                 })
