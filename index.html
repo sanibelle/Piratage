@@ -9,18 +9,25 @@
 
 <body>
     <div id="app">
-        <h1>Mon app</h1>
-        <h2>Mon message</h2>
-        <div v-html="message"></div>
         <div>
-            <label for="username">Nom d'utilisateur</label>
-            <input type="text" v-model="username" id="username" value="salut">
+            <h1>Mon app</h1>
+            <h2>Mon message</h2>
+            <div v-html="message"></div>
+            <div>
+                <label for="username">Nom d'utilisateur</label>
+                <input type="text" v-model="username" id="username" value="salut">
+            </div>
+            <div>
+                <label for="pwd">Mot de passe</label>
+                <input type="text" v-model="pwd" id="pwd" value="banane">
+            </div>
+            <button @click="login">Connectez-moi!</button>
         </div>
         <div>
-            <label for="pwd">Mot de passe</label>
-            <input type="text" v-model="pwd" id="pwd" value="banane">
+            <h2>Ton message</h2>
+            <textarea name="message" id="message" cols="30" rows="10" v-model="toSend"></textarea>
+            <button @click="sendMessage">Envoyer</button>
         </div>
-        <button @click="login">Connectez-moi!</button>
     </div>
 </body>
 </html>
@@ -32,7 +39,8 @@
         data: {
             message: '',
             username: 'salut',
-            pwd: 'banane'
+            pwd: 'banane',
+            toSend:''
         },
         methods: {
             login: async function () {
@@ -45,8 +53,14 @@
                     //body: JSON.stringify({user: this.username, pwd: this.pwd})
                     body: JSON.stringify({user: 'salut', pwd: 'banane'})
                 })
+                if (response.status === 200)
+                {
+                    alert("LoggedIn")
+                }
+                else {
+                    alert("nop")
+                }
                 const res = await response.json();
-                console.log("🚀 ~ file: index.html ~ line 51 ~ (await response.json()).token", res.token)
                 document.cookie = `${res.token}`
             },
             getMessage: async function () {
@@ -58,6 +72,22 @@
                     }
                 })
                 return response.json()
+            },
+            sendMessage: async function () {
+                console.log("allo")
+                const response = await fetch(`${URL}/message`, {
+                    method: 'PUT',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Cookie': Document.Cookie
+                    },
+                    body: JSON.stringify({message: this.toSend})
+                })
+                if (response.status === 202)
+                {
+                    alert("Bien reçu!")
+                }
             }
         },
         beforeCreate: async function() {
@@ -66,7 +96,7 @@
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
-                    }
+                    },
                 })
                 this.message = await response.json()
         }
