@@ -7,7 +7,7 @@ const authorization = (req, res, next) => {
       return res.sendStatus(403);
     }
     try {
-      const data = jwt.verify(token, "YOUR_SECRET_ENCRYPTION_KEY");
+      const data = jwt.verify(token, process.env.JWT_KEY);
       req.userId = data.id;
       req.userRole = data.role;
       return next();
