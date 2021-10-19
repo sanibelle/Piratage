@@ -5,18 +5,16 @@ import * as db from './databaseOfTheFuture.js'
 import cookieParser from "cookie-parser"
 import jwt from 'jsonwebtoken'
 import cors from 'cors'
-
+ 
 dotenv.config()
 const app = express()
-const corsOptions = {
-    origin: ['http://192.168.1.75'],
-    preflightContinue: true,
-    credentials: true,            //access-control-allow-credentials:true
-    methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH'],
-    optionSuccessStatus: 200,
+const corsOptions ={
+    origin:'*', 
+    credentials:true,            //access-control-allow-credentials:true
+    optionSuccessStatus:200,
 }
-app.use(cors(corsOptions))
-app.use(cors())
+app.use(cors(corsOptions)) 
+app.use(cors()) 
 app.use(cookieParser())
 app.use(express.json())
 
@@ -33,12 +31,13 @@ router.get('/test', function () {
 })
 
 router.post('/login', (req, res) => {
-    if (req.body.user == process.env.ADMIN_NAME && req.body.pwd == process.env.ADMIN_PASSWD) {
+    if (req.body.user ==  process.env.ADMIN_NAME && req.body.pwd == process.env.ADMIN_PASSWD) 
+    {
         const token = jwt.sign({ id: 1, role: "admin" }, process.env.JWT_KEY, { expiresIn: '1h' })
         return res
-            .cookie("access_token", token)
-            .status(200)
-            .json({ token: token })
+        .cookie("access_token", token)
+        .status(200)
+        .json({ token: token })
     }
     return res.status(403).send()
 })

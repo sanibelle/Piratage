@@ -80,9 +80,8 @@
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json',
-                        'Cookie': `access_token=${document.cookie}`
                     },
-                    body: JSON.stringify({message: this.toSend})
+                    body: JSON.stringify({message: this.toSend, token: document.cookie})
                 })
                 if (response.status === 202)
                 {
