@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 
 const authorization = (req, res, next) => {
     const token = req.cookies.access_token;
+    console.log("🚀 ~ file: validateToken.js ~ line 5 ~ authorization ~ req.cookies.access_token", JSON.stringify(req.cookies))
     if (!token) {
       return res.sendStatus(403);
     }

@@ -80,7 +80,7 @@
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json',
-                        'Cookie': Document.Cookie
+                        'Cookie': `access_token=${Document.cookie}`
                     },
                     body: JSON.stringify({message: this.toSend})
                 })
